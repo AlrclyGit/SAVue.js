@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <h1 :style="{ 'color':'red','font-weight': 200}">{{msg}}</h1>
+    <h1 :style="[styleObj2]">{{msg}}</h1>
+</div>
+</body>
+</html>
+
+
+
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'欢迎学员Vue',
+            styleObj2:{'font-style':'italic'}
+        },
+        methods:{
+
+        }
+    });
+</script>

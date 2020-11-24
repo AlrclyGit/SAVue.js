@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .inner{
+            height: 150px;
+            background-color: darkcyan;;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <!-- 阻止冒泡 -->
+        <div class="inner" @click.capture="btn_inner">
+            <input type="button" value="戳他" @click.stop="btn">
+        </div>
+
+        <!-- 阻止默认行为-->
+        <a href="https://www.alrcly.com" @click.prevent="btn">百度一下，你就知道</a>
+
+        <!-- .capture 捕获事件 -->
+        <div class="inner" @click.capture="btn_inner">
+            <input type="button" value="戳他" @click="btn">
+        </div>
+
+        <!-- .self 捕获事件 -->
+        <div class="inner" @click.self="btn_inner">
+            <input type="button" value="戳他" @click.stop="btn">
+        </div>
+
+        <!-- 使用 .once 只触发一次-->
+        <a href="https://www.alrcly.com" @click.prevent.once="btn">百度一下，你就知道</a>
+
+    </div>
+</body>
+</html>
+
+<script>
+    new Vue({
+        el:'#app',
+        data:{},
+        methods:{
+            btn_inner(){
+                console.log('inner');
+            },
+            btn(){
+                console.log('btn');
+            }
+        }
+    });
+</script>

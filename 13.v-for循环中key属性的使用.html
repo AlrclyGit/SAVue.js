@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <label>Id:<input type="text" v-model="id"></label>
+    <label>Name:<input type="text" v-model="name"></label>
+    <input type="button" value="添加" @click="add">
+    <p v-for="item in list" :key="item.id">
+        <input type="checkbox">{{item.id}}__{{item.name}}
+    </p>
+</div>
+</body>
+</html>
+
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            id: '',
+            name: '',
+            list: [
+                {id: 1, name: 'AAA'},
+                {id: 2, name: 'BBB'},
+                {id: 3, name: 'CCC'},
+                {id: 4, name: 'DDD'},
+                {id: 5, name: 'EEE'},
+            ]
+        },
+        methods: {
+            add() {
+                this.list.unshift({id: this.id, name: this.name});
+            }
+        }
+    });
+</script>

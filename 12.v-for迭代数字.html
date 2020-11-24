@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <p v-for="count in 10">这是第{{count}}次循环</p>
+</div>
+</body>
+</html>
+
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            list: {
+                1: {name: 'zs1'},
+                2: {name: 'zs2'},
+                3: {name: 'zs3'},
+            },
+        },
+        methods: {
+
+        }
+    });
+</script>

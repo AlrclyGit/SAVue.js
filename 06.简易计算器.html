@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <input type="text" v-model="number1">
+    <select v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text" v-model="number2">
+    <input type="button" value="=" @click="calc">
+    <input type="text" v-model="result">
+    <h4></h4>
+</div>
+</body>
+</html>
+
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            number1: 0,
+            number2: 0,
+            result: 0,
+            opt: '+'
+        },
+        methods: {
+            calc() {
+
+                // //
+                // switch (this.opt) {
+                //     case "+":
+                //         this.result = parseInt(this.number1) + parseInt(this.number2)
+                //         break;
+                //     case "-":
+                //         this.result = parseInt(this.number1) - parseInt(this.number2)
+                //         break;
+                //     case "*":
+                //         this.result = parseInt(this.number1) * parseInt(this.number2)
+                //         break;
+                //     case "/":
+                //         this.result = parseInt(this.number1) / parseInt(this.number2)
+                //         break;
+                // }
+
+                var codeStr = 'parseInt(this.number1)' + this.opt + 'parseInt(this.number2)'
+                this.result = eval(codeStr);
+            }
+
+
+        }
+    });
+</script>

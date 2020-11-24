@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .thin {
+            font-weight: 200;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .active {
+            letter-spacing: 0.5em;
+        }
+
+    </style>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <h1 :class="['red','italic']">这是一个大的H1</h1>
+    <h1 :class="['red','italic',flag ? 'active' : '']">这是一个大的H1</h1>
+    <h1 :class="['red','italic',{'active':flag}]">这是一个大的H1</h1>
+    <h1 :class="classObj">这是一个大的H1</h1>
+</div>
+</body>
+</html>
+
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true,
+            classObj: {red: true, thin: true, italic: false, active: false}
+        },
+        methods: {}
+    });
+</script>
