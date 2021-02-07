@@ -30,7 +30,8 @@
 <div id="app">
     <h1 :class="['red','italic']">这是一个大的H1</h1>
     <h1 :class="['red','italic',flag ? 'active' : '']">这是一个大的H1</h1>
-    <h1 :class="['red','italic',{'active':flag}]">这是一个大的H1</h1>
+    <h1 :class="['red','italic',{'active': flag}]">这是一个大的H1</h1>
+    <h1 :class="{red: true, thin: true, italic: false, active: false}">这是一个大的H1</h1>
     <h1 :class="classObj">这是一个大的H1</h1>
 </div>
 </body>
@@ -42,7 +43,7 @@
         el: '#app',
         data: {
             flag: true,
-            classObj: {red: true, thin: true, italic: false, active: false}
+            classObj:{red: true, thin: true, italic: false, active: false}
         },
         methods: {}
     });

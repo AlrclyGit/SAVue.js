@@ -5,49 +5,57 @@
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
-        .inner{
+        .inner {
             height: 150px;
-            background-color: darkcyan;;
+            background-color: darkcyan;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="app">
+<div id="app">
 
-        <!-- 阻止冒泡 -->
-        <div class="inner" @click.capture="btn_inner">
-            <input type="button" value="戳他" @click.stop="btn">
-        </div>
-
-        <!-- 阻止默认行为-->
-        <a href="https://www.alrcly.com" @click.prevent="btn">百度一下，你就知道</a>
-
-        <!-- .capture 捕获事件 -->
-        <div class="inner" @click.capture="btn_inner">
-            <input type="button" value="戳他" @click="btn">
-        </div>
-
-        <!-- .self 捕获事件 -->
-        <div class="inner" @click.self="btn_inner">
-            <input type="button" value="戳他" @click.stop="btn">
-        </div>
-
-        <!-- 使用 .once 只触发一次-->
-        <a href="https://www.alrcly.com" @click.prevent.once="btn">百度一下，你就知道</a>
-
+    <!-- 冒泡:从内向外触发事件 -->
+    <div class="inner" @click="btn_inner">
+        <input type="button" value="冒泡:从内向外触发事件" @click="btn">
     </div>
+
+    <!-- 阻止冒泡：触发事件本身，但不冒泡 -->
+    <div class="inner" @click="btn_inner">
+        <input type="button" value="阻止冒泡：触发事件本身，但不冒泡" @click.stop="btn">
+    </div>
+
+    <!-- 捕获机制:从外向内触发事件 -->
+    <div class="inner" @click.capture="btn_inner"> 捕获机制:从外向内触发事件
+        <input type="button" value="戳他" @click="btn">
+    </div>
+
+    <!-- 阻止默认行为-->
+    <div class="inner">
+        <a href="https://www.alrcly.com" @click.prevent="btn">百度一下，你就知道</a>
+    </div>
+
+    <!-- 不受冒泡、捕获的影响 -->
+    <div class="inner" @click.self="btn_inner"> 不受冒泡、捕获的影响
+        <input type="button" value="戳他" @click="btn">
+    </div>
+
+    <!-- 只触发一次事件 -->
+    <a href="https://www.alrcly.com" @click.prevent.once="btn">百度一下，你就知道</a>
+
+</div>
 </body>
 </html>
 
 <script>
     new Vue({
-        el:'#app',
-        data:{},
-        methods:{
-            btn_inner(){
-                console.log('inner');
+        el: '#app',
+        data: {},
+        methods: {
+            btn_inner() {
+                console.log('btn_inner');
             },
-            btn(){
+            btn() {
                 console.log('btn');
             }
         }
