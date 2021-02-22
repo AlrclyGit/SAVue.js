@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"> add item</h3>
+        </div>
+        <div class="panel-body form-inline">
+            <label> ID: <input type="text" class="form-control" v-model="id"></label>
+            <label> Name: <input type="text" class="form-control" v-model="name" @keyup.enter="add"></label>
+            <input type="button" value="add" class="btn btn-primary" @click="add">
+            <label>搜索名称关键字：<input type="text" class="form-control" v-model="keywords" v-focus v-color="'green'"></label>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Ctime</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in search(keywords)" :key="item.id">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.ctime | dateFormat()}}</td>
+            <td><a @click.prevent="del(item.id)">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="app2" >
+    <h1 v-font-weight="900" v-font-size="30">{{dt | dateFormat}}</h1>
+</div>
+
+</body>
+</html>
+
+
+<script>
+
+    // 全局过滤器
+    Vue.filter('dateFormat', (dataStr, pattern = '') => {
+        var dt = new Date(dataStr);
+        var y = dt.getFullYear().toString().padStart(4, "0");
+        var m = (dt.getMonth() + 1).toString().padStart(2, "0");
+        var d = dt.getDate().toString().padStart(2, "0");
+        if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+            return `${y}-${m}-${d}`
+        } else {
+            var hh = dt.getHours().toString().padStart(2, "0");
+            var mm = dt.getMinutes().toString().padStart(2, "0");
+            var ss = dt.getSeconds().toString().padStart(2, "0");
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        }
+    })
+
+    // 自定义按键修饰符
+    Vue.config.keyCodes.F2 = 113;
+
+    // 使用 Vue.directives 定义全局指令
+    Vue.directive('focus', {
+        bind: function (el, binding) {
+            // 当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+            // 注意：在每个函数中，第一个参数，永远是el，表示被绑定了指令的那个元素，这个el参数，是一个原生的JS对象
+            // 在元素 刚绑定了指令的时候，还没有 插入到 DOM 中去，这时候，调用 focus 方法没有作用
+            // 因为一个元素，只有插入DOM之后，才能获取焦点
+            el.focus()
+        },
+        inserted: function (el) {
+            el.focus()
+        },
+        updated: function (el) {
+        }
+    })
+
+    Vue.directive('color', {
+        bind: function (el, binding) {
+            // 样式，只要通过指令绑定给了元素，这个元素肯定有了一个内联样式
+            el.style.color = 'red'
+            console.log(binding.value)
+            console.log(binding.expression)
+            el.style.color = binding.value
+        },
+        inserted: function (el) {
+            el.focus()
+        },
+        updated: function (el) {
+        }
+    })
+
+    // 第一个 Vue
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            id: null,
+            name: null,
+            keywords: '',
+            list: [
+                {id: 1, name: '奔驰', ctime: new Date()},
+                {id: 2, name: '宝马', ctime: new Date()},
+            ]
+        },
+        methods: {
+            add() {
+                var car = {id: this.id, name: this.name, ctime: new Date()}
+                this.list.push(car);
+                this.id = this.name = ''
+            },
+            del(id) {
+
+                // 方法1
+                this.list.some((item, i) => {
+                    if (item.id == id) {
+                        this.list.splice(i, 1)
+                        return true;
+                    }
+                });
+
+                // 方法2
+                // var index = this.list.findIndex(item=>{
+                //     if(item.id == id){
+                //         return true;
+                //     }
+                // });
+                // this.list.splice(index,1)
+            },
+            search(keywords) {
+
+                // 方法1
+                // var newList = []
+                // this.list.forEach(item => {
+                //     if(item.name.indexOf(keywords) !== -1){
+                //         newList.push(item);
+                //     }
+                // });
+                // return newList;
+
+                // 方法二
+                return this.list.filter(item => {
+                    if (item.name.includes(keywords)) {
+                        return item
+                    }
+                })
+            }
+        },
+    });
+
+    // 第二个 Vue
+    var vm2 = new Vue({
+        el: '#app2',
+        data: {
+            dt: new Date()
+        },
+        methods: {},
+        filters: { // 定义私有过滤器
+            dateFormat: function (dataStr, pattern = '') {
+                var dt = new Date(dataStr);
+                var y = dt.getFullYear().toString().padStart(4, "0");
+                var m = (dt.getMonth() + 1).toString().padStart(2, "0");
+                var d = dt.getDate().toString().padStart(2, "0");
+                if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+                    return `${y}-${m}-${d}`
+                } else {
+                    var hh = dt.getHours().toString().padStart(2, "0");
+                    var mm = dt.getMinutes().toString().padStart(2, "0");
+                    var ss = dt.getSeconds().toString().padStart(2, "0");
+                    return `${y}-${m}-${d} ${hh}:${mm}:${ss}` + ' FT'
+                }
+            }
+        },
+        directives: {
+            'fontWeight': {
+                bind: function (el, binding) {
+                    el.style.fontWeight = binding.value
+                }
+            },
+            'fontSize': function (el,binding){ // 方法定义的简写形式
+                el.style.fontSize = parseInt(binding.value) + 'px'
+            }
+        }
+    })
+
+
+</script>

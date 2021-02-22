@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <h3 id="h3">{{msg}}</h3>
+</div>
+</body>
+</html>
+
+
+
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'OK'
+        },
+        methods:{
+            show(){
+                console.log('执行了show方法')
+            }
+        },
+
+        /* 初始化期间 */
+
+        // 初始化（空）
+        beforeCreate(){
+            // 这是我们遇到的第一个生命周期函数，表示实例完全被创建出来之前，会执行它
+            // 在 beforeCreate 生命周期函数执行的时候，data 和 methods 中的 数据都还没有初始化
+        },
+
+        // 初始化（数据和方法）
+        created(){
+            // 在 beforeCreate 生命周期函数执行的时候，data 和 methods 都已经初始化好了
+            // 如果要调用 methods 中的方法，或者操作 data 中的数据，最早只能在 create 中执行
+        },
+
+        // 渲染模版（到内存）
+        beforeMount(){
+            // 表示模版已经编译完成了，但是尚未把模版挂载到页面中.
+            // 内存中的元素还没有挂载到页面，此时页面还是空的/旧的，新数据还在内存中
+        },
+
+        // 初始化（到页面）
+        mounted(){
+            // 内存中的元素已经挂载到页面，此时页面是新的，如果没有后续操作，内存中的数据保持不动
+        },
+
+        /* 运行期间 */
+
+        // 数据更新（到内存）
+        beforeUpdate(){
+            // 界面没有更新，内存中也没有更新 DOM 树，但是 Data 中数据更新了
+        },
+
+        // 数据更新（到页面）
+        updated(){
+            // 已经根据 Data 中的数据，更内存中的 DOM 树，并挂载到页面了
+        },
+
+        /* 销毁期间 */
+        beforeDestroy(){
+            // 当执行 beforeDestroy 钩子函数的时候，Vue 实例就已经从运行阶段，进入到了销毁阶段；
+            // 实例身上所有的 data 和 所有的 methods ，以及过滤器、指令 都处于可用状态，此时，还没有真正执行销毁的过程
+        },
+        destroy(){
+            // 当执行到 destroy 函数的时候，组件已经完全销毁了，此时，组件中所有数据、方法、指令、过滤器 都已经不可用
+        }
+    });
+</script>
+

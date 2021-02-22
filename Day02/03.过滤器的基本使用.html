@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <p>{{msg | msgFormat('俊介')}}</p>
+</div>
+</body>
+</html>
+
+
+
+<script>
+
+    Vue.filter('msgFormat',function (msg,arg){
+        return msg + arg;
+    })
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'欢迎学员Vue'
+        }
+    });
+
+
+</script>
+

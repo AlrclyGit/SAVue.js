@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 导入Vue的包 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- this.$http-->
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+<body>
+<!-- 将来 new 的 VUE 实例，会控制这个元素中的所有内容-->
+<div id="app">
+    <input type="button" value="get请求" @click="getInfo">
+</div>
+</body>
+</html>
+
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            getInfo() {
+                // GET 请求
+                this.$http.get('https://api.caisurf.com/getShorUrl').then(
+                    function () {
+                        console.log('成功');
+                    }, function () {
+                        console.log('失败');
+                    }
+                );
+                // POST 请求
+                this.$http.post('https://api.caisurf.com/getShorUrl', {}, {emulateJSON: true}).then(
+                    function () {
+                        console.log('成功');
+                    }, function () {
+                        console.log('失败');
+                    }
+                )
+                // JSONP
+                this.$http.jsonp('https://api.caisurf.com/getShorUrl').then(
+                    function () {
+                        console.log('成功');
+                    }, function () {
+                        console.log('失败');
+                    }
+                )
+            }
+        }
+    });
+
+
+</script>
+
